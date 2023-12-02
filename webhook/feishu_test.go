@@ -12,7 +12,7 @@ const (
 )
 
 func TestFeishuHooker_SendTextMsg(t *testing.T) {
-	hooker := NewFeishuHooker(_testHooker, Secret(_testSecret))
+	hooker := NewFeishuHooker(_testHooker, Secret(_testSecret), AtAll())
 	err := hooker.SendTextMsg("测试普通文本告警")
 	assert.Nil(t, err)
 }

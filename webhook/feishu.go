@@ -6,6 +6,7 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"encoding/json"
+	"fmt"
 	"io"
 	"net/http"
 	"strconv"
@@ -57,6 +58,10 @@ func (f *FeishuHooker) SendTextMsg(content string) error {
 	encryptFlds, err := f.processEncrypt()
 	if err != nil {
 		return err
+	}
+
+	if f.atAll {
+		content = fmt.Sprintf(_hookTextRefUserContentFormat, "all", "所有人", content)
 	}
 	req := feishuTextHookReq{
 		feishuEncryptFields: encryptFlds,
@@ -113,7 +118,6 @@ func (f *FeishuHooker) GenSign(secret string, timestamp string) (string, error) 
 }
 
 func (f *FeishuHooker) doSend(req any) error {
-
 	data, _ := json.Marshal(req)
 	response, err := http.Post(f.url, "application/json", bytes.NewBuffer(data))
 	if err != nil {
