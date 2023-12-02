@@ -1,4 +1,4 @@
-module gotou
+module github.com/DreamerLWJ/gotou
 
 go 1.18
 
